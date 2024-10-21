@@ -27,12 +27,24 @@ if the user input is "forgot" then display "Heres a hint"
 if the user input is "reset" then display "let's reset your account"
 Call the function for determining wether the password is the same as the user input within the question function.*/
 
+//CHALLENGE PLANNING
+/* create a function called set password
+this function will recieve one variable which is the password set
+then check if the password set = "forgot" or "reset"
+and display a message "This password you set should not be used because it glitches the system"
+Call the function within the passwordchecker in the first condition to see if they are the same
+check if the passwordset length to see if its greater then or equal to 5 using an if statement after getting the password set
+if it greater then 5 characters long the program will proceed asking the user for their password input and the "PasswordChecker" function otherwise the program will display the message "Password is inadequate" and break
+
+*/
 //determine a proper function name and parameter variable name
 function PasswordChecker(actualPassword, user_attempt){
 
   if (actualPassword === user_attempt){
 
     console.log("Access Granted!")
+
+    PasswordSet(actualPassword);
 
   }
       
@@ -46,7 +58,7 @@ function PasswordChecker(actualPassword, user_attempt){
         console.log("Let's reset your account");
     
       }
-  else if(user_attempt === actualPassword){
+  else if(user_attempt !== actualPassword){
     console.log("Access Denied");
   }
       
@@ -57,28 +69,50 @@ function PasswordChecker(actualPassword, user_attempt){
 
 //CHALLENGE FUNCTION
 
+function PasswordSet(actualPassword){
+
+  if ((actualPassword = "forgot") || (actualPassword = "reset")){
+      console.log("This password you set should not be used because it glitches the system");
+  }
+
+}
+
 
 function StartApp(){
   readline.question('Please set up your password: ', predefinedPassword => {
 
     const actualPassword = predefinedPassword;
-    
 
-    readline.question('Please insert your password: ', attemptPassword => {
+    if (predefinedPassword.length >= 5){
+      readline.question('Please insert your password: ', attemptPassword => {
 
       
-      const user_attempt = attemptPassword;
+        const user_attempt = attemptPassword;
+  
+        PasswordChecker(predefinedPassword,attemptPassword);
+        //call your function here.
+  
+        // readline.close();
+  
+        if(user_attempt !== "quit"){
+          StartApp();
+        } else {
+          readline.close();
+        }
+      });
 
-      PasswordChecker(predefinedPassword,attemptPassword);
-      //call your function here.
 
-      // readline.close();
-      if(user_attempt !== "quit"){
-        StartApp();
-      } else {
-        readline.close();
-      }
-    });
+    }
+    else {
+
+      console.log("Password is inadequate");
+
+      readline.close();
+
+    }
+    
+
+    
   });
 }
 
