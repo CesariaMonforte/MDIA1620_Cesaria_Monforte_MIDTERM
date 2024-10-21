@@ -1,3 +1,5 @@
+//const { BalancedPool } = require('undici-types');
+
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
@@ -28,21 +30,51 @@ CHALLENGE (SAVE FOR LAST):
    - otherwise the function will check if the lunch money < cost of lunch and display  the message "[student name] does not have sufficient funds to buy [lunch item]!"
 */
 
-//BONUS PLANNING
+//CHALLENGE PLANNING
 /*
+get the balance within the "LunchMoneyChecker"
+the balance is amountoffunds-cost, display the balance to the student, with the student name, item and balance for each condition
+create a separate function called "BalancedChecker"
+within that function check if the balance is less then 5 and display "Warning: Low balance!"
+if not then check if the balance is = 0 then display "Balance depleted! Please add more funds."
+within the "LunchMoneyChecker" call the "BalanceChecker" function within each if condition
+
+
+
 */
 
 
 //determine a proper function name and parameter variable name
+function BalanceChecker(actualCost,studentFunds){
+    
+  let difference = studentFunds-actualCost;
+
+  if (difference < 5){
+
+    console.log("Warning: Low balance!")
+
+  }
+  else if (difference = 0){
+
+    console.log("Balance depleted! Please add more funds.");
+
+  }
+}
+
+
 function LunchMoneyChecker(studentName, studentFunds,preferedItem, actualCost){
+
+  
+  let balance = studentFunds-actualCost;
   
   if (studentFunds === actualCost || studentFunds > actualCost){
-
-    console.log(`${studentName} purchased ${preferedItem} purchased!`);
+    BalanceChecker(actualCost,studentFunds);
+    console.log(`${studentName} purchased ${preferedItem} purchased! Remaining Balance ${balance}`);
 
   }
   else if (studentFunds < actualCost){
-    console.log(`${studentName} does not have sufficient funds to buy ${preferedItem}!`);
+    BalanceChecker(actualCost,studentFunds);
+    console.log(`${studentName} does not have sufficient funds to buy ${preferedItem}! Needs ${balance} more`);
   }
   //write your code here
 }
